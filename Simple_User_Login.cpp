@@ -1,8 +1,10 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<conio.h>
 #include<cstdio>
 using namespace std;
+
 
 class User
 {
@@ -13,6 +15,7 @@ public:
 	User(const User &existingUser);
 	bool isLogged;
 	bool isExist();
+	void type_HidePassword();
 	void registerr();
 	void login();
 	void logout();
@@ -44,6 +47,17 @@ bool User::isExist()
 	UserFile.close();
 	return true;
 }
+void User::type_HidePassword()
+{
+	char c;
+	string Temp_Str;
+	while(c != char(13))
+	{
+		c = _getch();
+		Temp_Str.push_back(c);
+	}
+	this->Password = Temp_Str;
+}
 void User::registerr()
 {
 	string Tmp;
@@ -59,7 +73,7 @@ void User::registerr()
 		system("pause");
 		return;
 	}
-	cout << "\n\tType Password(at least 8 charaters): "; fflush(stdin); getline(cin, this->Password);
+	cout << "\n\tType Password(at least 8 charaters): "; fflush(stdin); this->type_HidePassword();
 
 	if(this->User_Name.find(" ") != -1 && this->Password.length() < 8)
 		return;
@@ -88,7 +102,7 @@ void User::login()
 		system("pause");
 		return;
 	}
-	cout << "\n\tPassword: "; fflush(stdin); getline(cin, this->Password);
+	cout << "\n\tPassword: "; fflush(stdin); this->type_HidePassword();
 
 
 	// open file to check password
@@ -100,7 +114,7 @@ void User::login()
 
 	if(Correct_PW != this->Password)
 	{
-		cout << "Wrong password!\n";
+		cout << "\nWrong password!\n";
 		system("pause");
 		return;
 	}
